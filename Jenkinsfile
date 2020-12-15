@@ -19,8 +19,8 @@ pipeline {
 						}
 					}
 					stage('Run & Test') {
-						sh './nohup gradlew bootRun &'
-          				sleep 20
+						sh './nohup.out gradlew bootRun &'
+          				sleep 5
 						sh 'curl -X GET http://localhost:8888/rest/mscovid/test?msg=testing'
 					}
 					stage('Nexus') {
