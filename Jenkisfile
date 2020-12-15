@@ -1,8 +1,9 @@
 pipeline {
 	agent any
+
 	stages {
 		stage('Pipeline'){
-			stages {
+			steps {
 				script {
 					stage('Build & Test') {
 
