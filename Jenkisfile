@@ -1,0 +1,30 @@
+pipeline {
+	agent any
+	stages {
+		stage('Pipeline'){
+			stages {
+				script {
+					stage('Build & Test') {
+
+					}
+					stage('Sonar') {
+						steps {
+
+						}
+					}
+					stage('Test') {
+						steps {
+
+						}
+					}
+					stage('Nexus') {
+						steps {
+
+						}
+					}
+				}
+				
+			}
+		}
+	}
+}
