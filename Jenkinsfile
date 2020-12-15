@@ -9,19 +9,13 @@ pipeline {
 
 					}
 					stage('Sonar') {
-						steps {
-
-						}
+		
 					}
 					stage('Test') {
-						steps {
-
-						}
+		
 					}
 					stage('Nexus') {
-						steps {
-
-						}
+			
 					}
 				}
 				
