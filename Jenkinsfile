@@ -6,7 +6,7 @@ pipeline {
 			steps {
 				script {
 					stage('Build & Test') {
-						sh "./grandlew clean build"
+						sh "./gradlew clean build"
 						// bat "grandlew clean build"
 					}
 					stage('Sonar') {
