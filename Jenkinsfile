@@ -13,12 +13,13 @@ pipeline {
 						echo "Select " + params.BUILD_TOOL
 					}
 					if (params.BUILD_TOOL == 'Gradle' ) {
-						def ejecucion = load 'gradle.groovy'
+						def tool = load 'gradle.groovy'
+						tool.call()
 					}
 					else if (params.BUILD_TOOL == 'Maven' ) {
-						def ejecucion = load 'maven.groovy'
+						def tool = load 'maven.groovy'
+						tool.call()
 					}
-					ejecucion.call()
 				}
 				
 			}
