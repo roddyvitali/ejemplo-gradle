@@ -1,13 +1,31 @@
 pipeline {
 	agent any
 
+	parameters {
+        choice(name: 'BUILD_TOOL', choices: ['Maven', 'Gradle'], description: 'Select a build tool')
+    }
+
 	stages {
 		stage('Pipeline'){
 			steps {
 				script {
 					stage('Build & Test Gradle') {
-						sh "./gradlew clean build"
-						// bat "grandlew clean build"
+						when {
+							expression { params.BUILD_TOOL == 'Gradle' }
+						}
+						steps {
+							def ejecucion = load 'gradle.groovy'
+							ejecucion.call()
+						}
+					}
+					stage('Build & Test Maven') {
+						when {
+							expression { params.BUILD_TOOL == 'Maven' }
+						}
+						steps {
+							def ejecucion = load 'maven.groovy'
+							ejecucion.call()
+						}
 					}
 					stage('Sonar') {
 						
@@ -15,7 +33,6 @@ pipeline {
 						
 						withSonarQubeEnv('sonar-server') { // If you have configured more than one global server connection, you can specify its name
 							sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
-							// bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
 						}
 					}
 					stage('Run & Test') {
