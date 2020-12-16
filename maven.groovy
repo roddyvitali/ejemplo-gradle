@@ -17,7 +17,7 @@ def call(){
         }
     }
     stage('Run & Test') {
-        sh 'nohup bash mvnw spring-boot:run &'
+        sh 'nohup bash ./mvnw spring-boot:run &'
         sleep 5
         sh 'curl -X GET http://localhost:8888/rest/mscovid/test?msg=testing'
     }
