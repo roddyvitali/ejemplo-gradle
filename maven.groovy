@@ -5,7 +5,7 @@
 */
 
 def call(){
-    stage('Build & Test') {
+    stage('Build & Test Maven') {
         sh './mvnw clean package -e'
     }
     stage('Sonar') {
@@ -16,7 +16,7 @@ def call(){
             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
         }
     }
-    stage('Run & Test') {
+    stage('Run & Test Maven') {
         sh 'nohup bash ./mvnw spring-boot:run &'
         sleep 5
         sh 'curl -X GET http://localhost:8888/rest/mscovid/test?msg=testing'
