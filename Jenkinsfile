@@ -2,7 +2,7 @@ pipeline {
 	agent any
 
 	parameters {
-        choice(name: 'BUILD_TOOL', choices: ['Maven', 'Gradle'], description: 'Select a build tool')
+        choice(name: 'BUILD_TOOL', defaultValue: 'Maven', choices: ['Maven', 'Gradle'], description: 'Select a build tool')
     }
 
 	stages {
