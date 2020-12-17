@@ -2,7 +2,7 @@ pipeline {
 	agent any
 
 	parameters {
-        choice(name: 'BUILD_TOOL', choices: ['Maven', 'Gradle'], description: 'Select a build tool')
+        choice(name: 'BUILD_TOOL', choices: ['maven', 'gradle'], description: 'Select a build tool')
     }
 
 	stages {
@@ -12,16 +12,19 @@ pipeline {
 					stage('Nexus') {
 						echo "Select " + params.BUILD_TOOL
 					}
-					if (params.BUILD_TOOL == 'Gradle' ) {
-						def tool = load 'gradle.groovy'
-						tool.call()
-					}
-					else if (params.BUILD_TOOL == 'Maven' ) {
-						def tool = load 'maven.groovy'
-						tool.call()
-					}
+					def tool = load "${params.BUILD_TOOL}.groovy"
+					tool.call()
 				}
 				
+			}
+		}
+
+		post {
+			success {
+				slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución exitosa."
+			}
+			failure {
+				slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución fallida en stage."
 			}
 		}
 	}
