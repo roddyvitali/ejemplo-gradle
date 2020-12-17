@@ -6,11 +6,11 @@
 
 def call(){
     stage('Build & Test Gradle') {
-		FAILED_STAGE=env.STAGE_NAME
+		env.FAILED_STAGE=env.STAGE_NAME
         sh "./gradlew clean build" 
     }
     stage('Sonar') {
-		FAILED_STAGE=env.STAGE_NAME
+		env.FAILED_STAGE=env.STAGE_NAME
         def scannerHome = tool 'sonar-scanner';
         
         withSonarQubeEnv('sonar-server') {
@@ -18,13 +18,13 @@ def call(){
         }
     }
     stage('Run & Test Gradle') {
-		FAILED_STAGE=env.STAGE_NAME
+		env.FAILED_STAGE=env.STAGE_NAME
         sh 'nohup bash gradlew bootRun &'
         sleep 5
         sh 'curl -X GET http://localhost:8888/rest/mscovid/test?msg=testing'
     }
     stage('Nexus') {
-		FAILED_STAGE=env.STAGE_NAME
+		env.FAILED_STAGE=env.STAGE_NAME
         nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: './build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
     }
 }

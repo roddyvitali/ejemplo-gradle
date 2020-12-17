@@ -1,4 +1,3 @@
-def FAILED_STAGE
 def USER_NAME
 pipeline {
 	agent any
@@ -13,7 +12,7 @@ pipeline {
 				script {
 					USER_NAME = 'Roddy Vitali'
 					stage('Load Build Tool') {
-						FAILED_STAGE=env.STAGE_NAME
+						env.FAILED_STAGE=env.STAGE_NAME
 						echo "Select " + params.BUILD_TOOL
 						def tool = load "${params.BUILD_TOOL}.groovy"
 						tool.call()
