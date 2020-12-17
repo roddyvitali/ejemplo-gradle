@@ -1,3 +1,5 @@
+def FAILED_STAGE
+def USER_NAME
 pipeline {
 	agent any
 
@@ -9,7 +11,9 @@ pipeline {
 		stage('Pipeline'){
 			steps {
 				script {
-					stage('Nexus') {
+					USER_NAME = 'Roddy Vitali'
+					stage('Load Build Tool') {
+						FAILED_STAGE=env.STAGE_NAME
 						echo "Select " + params.BUILD_TOOL
 						def tool = load "${params.BUILD_TOOL}.groovy"
 						tool.call()
@@ -20,10 +24,10 @@ pipeline {
 	}
 	post {
 		success {
-			slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución exitosa."
+			slackSend message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución exitosa."
 		}
 		failure {
-			slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución fallida en stage."
+			slackSend message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución fallida en stage. [${FAILED_STAGE}]"
 		}
 	}
 }
