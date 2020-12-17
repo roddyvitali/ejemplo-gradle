@@ -17,14 +17,13 @@ pipeline {
 				}
 			}
 		}
-
-		post {
-			success {
-				slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución exitosa."
-			}
-			failure {
-				slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución fallida en stage."
-			}
+	}
+	post {
+		success {
+			slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución exitosa."
+		}
+		failure {
+			slackSend message: "[Roddy Vitali][Nombre Job][${params.BUILD_TOOL}] Ejecución fallida en stage."
 		}
 	}
 }
