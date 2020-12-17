@@ -11,11 +11,10 @@ pipeline {
 				script {
 					stage('Nexus') {
 						echo "Select " + params.BUILD_TOOL
+						def tool = load "${params.BUILD_TOOL}.groovy"
+						tool.call()
 					}
-					def tool = load "${params.BUILD_TOOL}.groovy"
-					tool.call()
 				}
-				
 			}
 		}
 
