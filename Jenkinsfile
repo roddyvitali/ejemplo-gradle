@@ -23,10 +23,10 @@ pipeline {
 	}
 	post {
 		success {
-			slackSend message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución exitosa."
+			slackSend color: "#BADA55", message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución exitosa."
 		}
 		failure {
-			slackSend message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución fallida en stage. [${FAILED_STAGE}]"
+			slackSend color: "#FF0000", message: "[${USER_NAME}][${JOB_NAME}][${params.BUILD_TOOL}] Ejecución fallida en stage. [${FAILED_STAGE}]"
 		}
 	}
 }
